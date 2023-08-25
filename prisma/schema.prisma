@@ -11,17 +11,16 @@ datasource db {
 }
 
 model Snack {
-  snack_id          String                   @id @default(cuid())
-  snack_name        String
-  flavour_text      String
-  category_id       Int   
-  price             Int              
-  category          Category                @relation(fields: [category_id], references: [category_id])
+  snackId     String   @id @default(cuid())
+  snackName   String
+  flavourText String
+  categoryId  Int
+  price       Int
+  category    Category @relation(fields: [categoryId], references: [categoryId])
 }
 
 model Category {
-  category_id       Int                     @id 
-  category_name     String
-  snacks            Snack[]         
+  categoryId   Int     @id
+  categoryName String
+  snacks       Snack[]
 }
-
