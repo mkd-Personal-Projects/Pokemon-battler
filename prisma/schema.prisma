@@ -17,8 +17,8 @@ model Pokemon {
   health        Int
   speed         Int
   attack        Int
-  defence       Int
-  splDefence    Int
+  defense       Int
+  splDefense    Int
   splAttack     Int
   level         Int
   moves         PokemonMoves[]

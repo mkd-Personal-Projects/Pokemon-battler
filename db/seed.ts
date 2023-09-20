@@ -1,8 +1,9 @@
 import client from "./client";
-import { pokemon } from "./data/pokemon";
 import { moves } from "./data/moves";
-import { pokemonMoves } from "./data/pokemonMoves";
 import { types } from "./data/types";
+import { formatPokemon } from "../utils/formatPokemon";
+import { rawPokemon } from "./data/rawPokemon";
+import { pokemonMoves } from "./data/pokemonMoves";
 
 const seed = async () => {
   await client.pokemonMoves.deleteMany();
@@ -12,8 +13,11 @@ const seed = async () => {
   await client.moves.deleteMany();
 
   await client.moves.createMany({ data: moves });
-  await client.pokemon.createMany({ data: pokemon });
   await client.types.createMany({ data: types });
+
+  const formattedPokemon = formatPokemon(rawPokemon);
+  await client.pokemon.createMany({ data: formattedPokemon });
+
   // await client.pokemonMoves.createMany({ data: pokemonMoves });
   // await client.pokemonTypes.createMany({ data: pokemonTypes });
 
