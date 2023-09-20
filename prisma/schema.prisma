@@ -10,17 +10,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Snack {
-  snackId     String   @id @default(cuid())
-  snackName   String
-  flavourText String
-  categoryId  Int
-  price       Int
-  category    Category @relation(fields: [categoryId], references: [categoryId])
+model Pokemon {
+  pokemonId     Int     @id
+  pokemonName   String
+  type          String
+  health        Int
+  speed         Int
+  attack        Int
+  defence       Int
+  splDefence    Int
+  splAttack     Int
+  level         Int
+  moves         PokemonMoves[]
+  Types         PokemonTypes[]
 }
 
-model Category {
-  categoryId   Int     @id
-  categoryName String
-  snacks       Snack[]
+model Moves {
+  moveName      String  @id
+  type          String
+  category      String
+  power         Int
+  accuracy      Int
+  pp            Int
+  pokemon       PokemonMoves[]
 }
+
+model Types {
+  type              String           @id
+  strongAgainst     String[]
+  weakAgainst       String[]
+  doesNotEffect     String[]
+  pokemon           PokemonTypes[]
+}
+
+model PokemonMoves {
+  pokemonMoveId       String    @id @default(cuid())
+  pokemonId           Int
+  moveInfo            String
+  Pokemon             Pokemon   @relation(fields: [pokemonId], references: [pokemonId])
+  Moves               Moves     @relation(fields: [moveInfo], references: [moveName])
+}
+
+model PokemonTypes {
+  pokemonTypeId       String    @id @default(cuid())
+  pokemonId           Int
+  typeInfo            String
+  Pokemon             Pokemon   @relation(fields: [pokemonId], references: [pokemonId])
+  Types               Types     @relation(fields: [typeInfo], references: [type])
+}
+

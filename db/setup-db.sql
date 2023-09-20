@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS ts_snacks;
-CREATE DATABASE ts_snacks;
+DROP DATABASE IF EXISTS ts_pokemon;
+CREATE DATABASE ts_pokemon;
