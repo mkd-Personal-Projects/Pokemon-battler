@@ -1,4 +1,4 @@
-import { RawPokemon, formattedPokemon } from "../../db/data/rawPokemonTypes";
+import { RawPokemon, formattedPokemon } from "../../db/data/TsPokemonTypes";
 import { formatPokemon } from "../../utils/formatPokemon";
 
 describe("formatPokemon", () => {
@@ -36,7 +36,6 @@ describe("formatPokemon", () => {
       {
         pokemonId: 4,
         pokemonName: "Charmander",
-        type: "Fire",
         health: 39,
         attack: 52,
         defense: 43,
@@ -52,35 +51,7 @@ describe("formatPokemon", () => {
     expect(output).toEqual(expectedOutput);
   });
 
-  it("should ignore pokemon with more than one type", () => {
-    const input: RawPokemon[] = [
-      {
-        id: 1,
-        name: {
-          english: "Bulbasaur",
-          japanese: "フシギダネ",
-          chinese: "妙蛙种子",
-          french: "Bulbizarre",
-        },
-        type: ["Grass", "Poison"],
-        base: {
-          HP: 45,
-          Attack: 49,
-          Defense: 49,
-          "Sp. Attack": 65,
-          "Sp. Defense": 65,
-          Speed: 45,
-        },
-      },
-    ];
-    const expectedOutput: formattedPokemon[] = [];
-
-    const output: formattedPokemon[] = formatPokemon(input);
-
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should format all pokemon with a single type and ignore all pokemon with multiple types", () => {
+  it("should format all formatted pokemon when given an array with multiple non-formatted pokemon", () => {
     const input: RawPokemon[] = [
       {
         id: 2,
@@ -157,9 +128,19 @@ describe("formatPokemon", () => {
     ];
     const expectedOutput: formattedPokemon[] = [
       {
+        pokemonId: 2,
+        pokemonName: "Ivysaur",
+        health: 60,
+        attack: 62,
+        defense: 63,
+        splAttack: 80,
+        splDefense: 80,
+        speed: 60,
+        level: 1,
+      },
+      {
         pokemonId: 4,
         pokemonName: "Charmander",
-        type: "Fire",
         health: 39,
         attack: 52,
         defense: 43,
@@ -171,7 +152,6 @@ describe("formatPokemon", () => {
       {
         pokemonId: 5,
         pokemonName: "Charmeleon",
-        type: "Fire",
         health: 58,
         attack: 64,
         defense: 58,
@@ -183,7 +163,6 @@ describe("formatPokemon", () => {
       {
         pokemonId: 7,
         pokemonName: "Squirtle",
-        type: "Water",
         health: 44,
         attack: 48,
         defense: 65,

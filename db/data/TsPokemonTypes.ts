@@ -20,7 +20,6 @@ export type RawPokemon = {
 export type formattedPokemon = {
   pokemonId: number;
   pokemonName: string;
-  type: string;
   health: number;
   speed: number;
   attack: number;
@@ -28,4 +27,21 @@ export type formattedPokemon = {
   splAttack: number;
   splDefense: number;
   level: number;
+};
+
+export type RawMoves = {
+  moveName: string;
+  type: string;
+  category: string;
+  power: number;
+  accuracy: number;
+  pp: number;
+};
+
+export type formattedMoves = {
+  moveName: string;
+  category: string;
+  power: number;
+  accuracy: number;
+  pp: number;
 };

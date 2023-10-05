@@ -13,7 +13,6 @@ datasource db {
 model Pokemon {
   pokemonId     Int     @id
   pokemonName   String
-  type          String
   health        Int
   speed         Int
   attack        Int
@@ -27,7 +26,6 @@ model Pokemon {
 
 model Moves {
   moveName      String  @id
-  type          String
   category      String
   power         Int
   accuracy      Int
