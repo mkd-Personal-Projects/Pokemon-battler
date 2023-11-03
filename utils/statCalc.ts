@@ -1,6 +1,6 @@
 import { pokemonStats } from "../db/data/TsPokemonTypes";
 
-const statCalc = (stat: number, level: number) => {
+const statCalc: (stat: number, level: number) => number = (stat, level) => {
   const assumedIv = 31; // 31 being the highest iv possible
 
   const doubleStat = 2 * stat;
