@@ -11,59 +11,73 @@ datasource db {
 }
 
 model Pokemon {
-  pokemonId     Int     @id
-  pokemonName   String
-  health        Int
-  speed         Int
-  attack        Int
-  defense       Int
-  splDefense    Int
-  splAttack     Int
-  level         Int
-  moves         PokemonMoves[]
-  Types         PokemonTypes[]
+  pokemonId   Int            @id
+  pokemonName String
+  health      Int
+  speed       Int
+  attack      Int
+  defense     Int
+  splDefense  Int
+  splAttack   Int
+  level       Int
+  Moves       PokemonMoves[]
+  Types       PokemonTypes[]
+  Belt        Belt[]
 }
 
 model Moves {
-  moveName      String  @id
-  category      String
-  power         Int
-  accuracy      Int
-  pp            Int
-  pokemon       PokemonMoves[]
-  Types         MoveTypes[]
+  moveName String         @id
+  category String
+  power    Int
+  accuracy Int
+  pp       Int
+  Pokemon  PokemonMoves[]
+  Types    MoveTypes[]
 }
 
 model Types {
-  type              String           @id
-  strongAgainst     String[]
-  weakAgainst       String[]
-  doesNotEffect     String[]
-  pokemon           PokemonTypes[]
-  moves             MoveTypes[]
-}
-
-model PokemonMoves {
-  pokemonMoveId       String    @id @default(cuid())
-  pokemonId           Int
-  moveInfo            String
-  Pokemon             Pokemon   @relation(fields: [pokemonId], references: [pokemonId])
-  Moves               Moves     @relation(fields: [moveInfo], references: [moveName])
+  type          String         @id
+  strongAgainst String[]
+  weakAgainst   String[]
+  doesNotEffect String[]
+  Pokemon       PokemonTypes[]
+  Moves         MoveTypes[]
 }
 
 model PokemonTypes {
-  pokemonTypeId       String    @id @default(cuid())
-  pokemonId           Int
-  typeInfo            String
-  Pokemon             Pokemon   @relation(fields: [pokemonId], references: [pokemonId])
-  Types               Types     @relation(fields: [typeInfo], references: [type])
+  pokemonTypeId String  @id @default(cuid())
+  pokemonId     Int
+  type          String
+  Pokemon       Pokemon @relation(fields: [pokemonId], references: [pokemonId])
+  Types         Types   @relation(fields: [type], references: [type])
 }
 
 model MoveTypes {
-  moveTypeId          String    @id @default(cuid())
-  moveInfo            String
-  typeInfo            String
-  Moves               Moves     @relation(fields: [moveInfo], references: [moveName])
-  Types               Types     @relation(fields: [typeInfo], references: [type])
+  moveTypeId String @id @default(cuid())
+  move       String
+  type       String
+  Moves      Moves  @relation(fields: [move], references: [moveName])
+  Types      Types  @relation(fields: [type], references: [type])
 }
 
+model PokemonMoves {
+  pokemonMoveId String  @id @default(cuid())
+  pokemonId     Int
+  move          String
+  Pokemon       Pokemon @relation(fields: [pokemonId], references: [pokemonId])
+  Moves         Moves   @relation(fields: [move], references: [moveName])
+}
+
+model Trainers {
+  trainerId String @id @default(cuid())
+  name      String
+  Belt      Belt[]
+}
+
+model Belt {
+  BeltId    String   @id @default(cuid())
+  pokemonId Int
+  trainerId String
+  Pokemon   Pokemon  @relation(fields: [pokemonId], references: [pokemonId])
+  Trainers  Trainers @relation(fields: [trainerId], references: [trainerId])
+}
