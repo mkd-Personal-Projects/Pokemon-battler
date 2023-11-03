@@ -20,6 +20,9 @@ export type RawPokemon = {
 export type formattedPokemon = {
   pokemonId: number;
   pokemonName: string;
+} & pokemonStats;
+
+export type pokemonStats = {
   health: number;
   speed: number;
   attack: number;

@@ -1,25 +1,42 @@
-export const calculateHp = (hp: number, level: number) => {
+import { pokemonStats } from "../db/data/TsPokemonTypes";
+
+const statCalc = (stat: number, level: number) => {
   const assumedIv = 31; // 31 being the highest iv possible
 
-  const doubleHp = 2 * hp;
-  const addIv = doubleHp + assumedIv;
+  const doubleStat = 2 * stat;
+  const addIv = doubleStat + assumedIv;
   const timesLevel = addIv * level;
-  const divideHundo = Math.floor(timesLevel / 100);
-  const addLevel = divideHundo + level;
-  const finalAns = addLevel + 10;
+  const finalAns = Math.floor(timesLevel / 100);
 
   return finalAns;
 };
 
-export const calculateStats = (hp: number, level: number) => {
-  const assumedIv = 31; // 31 being the highest iv possible
+export const calculateStats: (stats: pokemonStats) => pokemonStats = ({
+  health,
+  attack,
+  defense,
+  splAttack,
+  splDefense,
+  speed,
+  level,
+}) => {
+  const hpModifier = level + 10;
+  const statModifier = 5;
 
-  const doubleHp = 2 * hp;
-  const addIv = doubleHp + assumedIv;
-  const timesLevel = addIv * level;
-  const divideHundo = Math.floor(timesLevel / 100);
-  const addLevel = divideHundo + level;
-  const finalAns = addLevel + 5;
+  const newHp = statCalc(health, level) + hpModifier;
+  const newAttack = statCalc(attack, level) + statModifier;
+  const newDefense = statCalc(defense, level) + statModifier;
+  const newSplAttack = statCalc(splAttack, level) + statModifier;
+  const newSplDefense = statCalc(splDefense, level) + statModifier;
+  const newSpeed = statCalc(speed, level) + statModifier;
 
-  return finalAns;
+  return {
+    health: newHp,
+    attack: newAttack,
+    defense: newDefense,
+    splAttack: newSplAttack,
+    splDefense: newSplDefense,
+    speed: newSpeed,
+    level,
+  };
 };
