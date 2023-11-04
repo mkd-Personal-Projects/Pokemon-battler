@@ -1,6 +1,6 @@
 export const trainers = [
   {
-    name: "Lacey",
+    name: "...",
   },
   {
     name: "Volkner",

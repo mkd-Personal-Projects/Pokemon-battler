@@ -3,18 +3,23 @@ import { moves } from "./data/moves";
 import { types } from "./data/types";
 import { formatPokemon } from "../utils/formatPokemon";
 import { rawPokemon } from "./data/rawPokemon";
-import { pokemonMoves } from "./data/pokemonMoves";
+// import { pokemonMoves } from "./data/pokemonMoves";
 import { formatMoves } from "../utils/formatMoves";
 import { formatPokemonTypes } from "../utils/formatPokemonTypes";
 import { formatMoveTypes } from "../utils/formatMoveTypes";
 import { trainers } from "./data/trainers";
+import fs from "fs";
+// import { getCynthiasTeam } from "./data/trainerPokemon";
 
 const seed = async () => {
   await client.pokemonMoves.deleteMany();
   await client.pokemonTypes.deleteMany();
+  await client.moveTypes.deleteMany();
+
   await client.types.deleteMany();
   await client.pokemon.deleteMany();
   await client.moves.deleteMany();
+  await client.trainers.deleteMany();
 
   await client.types.createMany({ data: types });
 
@@ -48,6 +53,10 @@ const seed = async () => {
   // );
 
   // rawPokemon id and moves names to create pokemon moves
+
+  // fs.writeFile()
+
+  // const cynthiasTeam = getCynthiasTeam()
 
   console.log("all seeded a ok");
 };

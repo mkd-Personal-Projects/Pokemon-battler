@@ -1,4 +1,4 @@
-import { RawPokemon, formattedPokemon } from "../../db/data/TsPokemonTypes";
+import { RawPokemon, formattedPokemon } from "../../db/data/tsPokemonTypes";
 import { formatPokemon } from "../../utils/formatPokemon";
 
 describe("formatPokemon", () => {

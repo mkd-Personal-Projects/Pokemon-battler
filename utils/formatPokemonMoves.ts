@@ -1,4 +1,4 @@
-import { RawMoves, RawPokemon } from "../db/data/TsPokemonTypes";
+import { RawMoves, RawPokemon } from "../db/data/tsPokemonTypes";
 
 export const formatPokemonMoves = (
   rawPokemon: RawPokemon[],

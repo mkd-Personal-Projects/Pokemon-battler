@@ -1,4 +1,4 @@
-import { RawPokemon } from "../db/data/TsPokemonTypes";
+import { RawPokemon } from "../db/data/tsPokemonTypes";
 
 export const formatPokemon = (rawPokemon: RawPokemon[]) => {
   return rawPokemon.map((pokemon) => {
