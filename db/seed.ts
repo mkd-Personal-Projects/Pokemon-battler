@@ -58,6 +58,13 @@ const seed = async () => {
 
   // const cynthiasTeam = getCynthiasTeam()
 
+  console.log(
+    await client.moveTypes.findMany({
+      where: { type: "Dragon" },
+      include: { Moves: true },
+    })
+  );
+
   console.log("all seeded a ok");
 };
 
