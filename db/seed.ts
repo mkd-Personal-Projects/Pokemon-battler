@@ -9,6 +9,7 @@ import { formatPokemonTypes } from "../utils/formatPokemonTypes";
 import { formatMoveTypes } from "../utils/formatMoveTypes";
 import { trainers } from "./data/trainers";
 import fs from "fs";
+import { rawMoves } from "./data/rawMoves";
 // import { getCynthiasTeam } from "./data/trainerPokemon";
 
 const seed = async () => {
@@ -23,11 +24,12 @@ const seed = async () => {
 
   await client.types.createMany({ data: types });
 
-  const formattedMoves = formatMoves(moves);
+  const formattedMoves = formatMoves(rawMoves);
   await client.moves.createMany({ data: formattedMoves });
 
-  const formattedMoveTypes = formatMoveTypes(moves);
-  await client.moveTypes.createMany({ data: formattedMoveTypes });
+  const formattedMoveTypes = formatMoveTypes(rawMoves);
+  console.log(formattedMoveTypes);
+  // await client.moveTypes.createMany({ data: formattedMoveTypes });
 
   const formattedPokemon = formatPokemon(rawPokemon);
   await client.pokemon.createMany({ data: formattedPokemon });
@@ -58,12 +60,12 @@ const seed = async () => {
 
   // const cynthiasTeam = getCynthiasTeam()
 
-  console.log(
-    await client.moveTypes.findMany({
-      where: { type: "Dragon" },
-      include: { Moves: true },
-    })
-  );
+  // console.log(
+  //   await client.moveTypes.findMany({
+  //     where: { type: "Dragon" },
+  //     include: { Moves: true },
+  //   })
+  // );
 
   console.log("all seeded a ok");
 };

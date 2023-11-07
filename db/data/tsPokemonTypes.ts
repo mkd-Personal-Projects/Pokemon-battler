@@ -32,13 +32,28 @@ export type pokemonStats = {
   level: number;
 };
 
-export type RawMoves = {
+export type FormattedMoves = {
   moveName: string;
   type: string;
   category: string;
   power: number;
   accuracy: number;
   pp: number;
+};
+
+export type RawMoves = {
+  [key: string]: {
+    num: number;
+    accuracy: number | boolean;
+    basePower: number;
+    category: string;
+    name: string;
+    pp: number;
+    priority: number;
+    flags: { [key: string]: string | number };
+    target: string;
+    type: string;
+  };
 };
 
 export type formattedMoves = {

@@ -1,8 +1,8 @@
-import { RawMoves, RawPokemon } from "../db/data/tsPokemonTypes";
+import { FormattedMoves, RawPokemon } from "../db/data/tsPokemonTypes";
 
 export const formatPokemonMoves = (
   rawPokemon: RawPokemon[],
-  rawMoves: RawMoves[]
+  rawMoves: FormattedMoves[]
 ) => {
   function combinePokemonWithMoves(pokemon: RawPokemon) {
     return rawMoves.reduce(
