@@ -1,4 +1,5 @@
 import client from "../client";
+import { MoveTypes } from "./tsPokemonTypes";
 
 export const getCynthiasTeam = async () => [
   ...(await client.pokemon.findMany({ where: { pokemonName: "Spiritomb" } })),
@@ -75,6 +76,7 @@ export const getMarshalsTeam = async () => [
     where: { pokemonName: "Vikavolt" },
   })),
 ];
+
 export const getVolknersTeam = async () => [
   ...(await client.pokemon.findMany({
     where: { pokemonName: "Electivire" },
@@ -112,3 +114,129 @@ export const getCustomTeam = async () => [
     where: { pokemonName: "Latios" },
   })),
 ];
+
+export const setCynthiasTeam = async () => {
+  const cynthiasTeam = await getCynthiasTeam();
+
+  const pokemonMoves: { [key: string]: MoveTypes[] } = {
+    Spiritomb: [
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Dark Pulse" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Psychic" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Silver Wind" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Astonish" } },
+        include: { Moves: true },
+      })),
+    ],
+    Lucario: [
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Aura Sphere" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Dragon Pulse" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Psychic" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Earthquake" } },
+        include: { Moves: true },
+      })),
+    ],
+    Roserade: [
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Energy Ball" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Shadow Ball" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Sludge Bomb" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Extrasensory" } },
+        include: { Moves: true },
+      })),
+    ],
+    Milotic: [
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Surf" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Ice Beam" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Aurora Beam" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Bite" } },
+        include: { Moves: true },
+      })),
+    ],
+    Togekiss: [
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Muddy Water" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Earthquake" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Stone Edge" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Sludge Bomb" } },
+        include: { Moves: true },
+      })),
+    ],
+    Garchomp: [
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Dragon Rush" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Earthquake" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Brick Break" } },
+        include: { Moves: true },
+      })),
+      ...(await client.moveTypes.findMany({
+        where: { Moves: { moveName: "Giga Impact" } },
+        include: { Moves: true },
+      })),
+    ],
+  };
+
+  cynthiasTeam.forEach(async (pokemon) => {
+    const selectedMoves = pokemonMoves[pokemon.pokemonName];
+
+    selectedMoves.forEach(async (move) => {
+      // console.log(move, pokemon.pokemonName);
+      await client.pokemonMoves.createMany({
+        data: { pokemonId: pokemon.pokemonId, move: move.move },
+      });
+    });
+  });
+};

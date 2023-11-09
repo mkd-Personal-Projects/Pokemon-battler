@@ -10,6 +10,8 @@ import { formatMoveTypes } from "../utils/formatMoveTypes";
 import { trainers } from "./data/trainers";
 import fs from "fs";
 import { rawMoves } from "./data/rawMoves";
+import { setCynthiasTeam } from "./data/trainerPokemon";
+import { calculateStats } from "../utils/statCalc";
 // import { getCynthiasTeam } from "./data/trainerPokemon";
 
 const seed = async () => {
@@ -28,16 +30,20 @@ const seed = async () => {
   await client.moves.createMany({ data: formattedMoves });
 
   const formattedMoveTypes = formatMoveTypes(rawMoves);
-  console.log(formattedMoveTypes);
-  // await client.moveTypes.createMany({ data: formattedMoveTypes });
+  await client.moveTypes.createMany({ data: formattedMoveTypes });
 
   const formattedPokemon = formatPokemon(rawPokemon);
-  await client.pokemon.createMany({ data: formattedPokemon });
+  await client.pokemon.createMany({
+    data: formattedPokemon.map((pokemon) => {
+      return { ...pokemon, ...calculateStats({ ...pokemon, level: 50 }) };
+    }),
+  });
 
   const formattedPokemonTypes = formatPokemonTypes(rawPokemon);
   await client.pokemonTypes.createMany({ data: formattedPokemonTypes });
 
   await client.trainers.createMany({ data: trainers });
+  await setCynthiasTeam();
   // await client.pokemonMoves.createMany({ data: pokemonMoves });
 
   // await client.belt.createMany({data: })
@@ -66,6 +72,10 @@ const seed = async () => {
   //     include: { Moves: true },
   //   })
   // );
+
+  console.log(
+    (await client.pokemonMoves.findMany({ include: { Pokemon: true } })).length
+  );
 
   console.log("all seeded a ok");
 };

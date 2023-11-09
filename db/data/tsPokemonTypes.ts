@@ -32,15 +32,6 @@ export type pokemonStats = {
   level: number;
 };
 
-export type FormattedMoves = {
-  moveName: string;
-  type: string;
-  category: string;
-  power: number;
-  accuracy: number;
-  pp: number;
-};
-
 export type RawMoves = {
   [key: string]: {
     num: number;
@@ -56,10 +47,18 @@ export type RawMoves = {
   };
 };
 
-export type formattedMoves = {
+export type FormattedMoves = {
   moveName: string;
   category: string;
   power: number;
   accuracy: number;
   pp: number;
+};
+
+export type MoveTypes = {
+  moveTypeId: string;
+  move: string;
+  type: string;
+  Moves?: FormattedMoves;
+  Types?: {};
 };

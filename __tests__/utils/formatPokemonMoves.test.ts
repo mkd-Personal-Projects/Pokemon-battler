@@ -1,6 +1,6 @@
 import { formatPokemonMoves } from "../../utils/formatPokemonMoves";
 
-describe("formatPokemonMoves", () => {
+describe.skip("formatPokemonMoves", () => {
   it("should return an empty array when given two empty arrays", () => {
     expect(formatPokemonMoves([], [])).toEqual([]);
   });

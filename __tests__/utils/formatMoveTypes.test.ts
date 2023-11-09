@@ -37,6 +37,31 @@ describe("formatMoveTypes", () => {
     expect(output).toEqual(expectedOutput);
   });
 
+  it("should ignore moves with a 0 as the value of the basePower property", () => {
+    const input = {
+      amnesia: {
+        num: 133,
+        accuracy: true,
+        basePower: 0,
+        category: "Status",
+        name: "Amnesia",
+        pp: 20,
+        priority: 0,
+        flags: { snatch: 1 },
+        boosts: { spd: 2 },
+        secondary: null,
+        target: "self",
+        type: "Psychic",
+        zMove: { effect: "clearnegativeboost" },
+        contestType: "Cute",
+        desc: "Raises the user's Special Defense by 2 stages.",
+        shortDesc: "Raises the user's Sp. Def by 2.",
+      },
+    };
+
+    expect(formatMoveTypes(input)).toEqual([]);
+  });
+
   it("should return an array with the move name and type for all moves", () => {
     const input = {
       absorb: {

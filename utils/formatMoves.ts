@@ -1,8 +1,8 @@
-import { RawMoves, formattedMoves } from "../db/data/tsPokemonTypes";
+import { RawMoves, FormattedMoves } from "../db/data/tsPokemonTypes";
 
 export const formatMoves = (rawMoves: RawMoves) => {
   return Object.values(rawMoves).reduce(
-    (accumulator: formattedMoves[], move) => {
+    (accumulator: FormattedMoves[], move) => {
       if (move.basePower) {
         let accuracy = 0;
 
@@ -28,14 +28,4 @@ export const formatMoves = (rawMoves: RawMoves) => {
     },
     []
   );
-
-  // return rawPokemon.map((pokemon) => {
-  //   return {
-  //     moveName: pokemon.moveName[0].toUpperCase() + pokemon.moveName.slice(1),
-  //     category: pokemon.category[0].toUpperCase() + pokemon.category.slice(1),
-  //     power: pokemon.power,
-  //     accuracy: pokemon.accuracy,
-  //     pp: pokemon.pp,
-  //   };
-  // });
 };
