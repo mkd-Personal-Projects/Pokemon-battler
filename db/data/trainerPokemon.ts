@@ -229,14 +229,20 @@ export const setCynthiasTeam = async () => {
     ],
   };
 
+  const selectedPokemonMoves: { pokemonId: number; move: string }[] = [];
+
   cynthiasTeam.forEach(async (pokemon) => {
     const selectedMoves = pokemonMoves[pokemon.pokemonName];
 
     selectedMoves.forEach(async (move) => {
-      // console.log(move, pokemon.pokemonName);
-      await client.pokemonMoves.createMany({
-        data: { pokemonId: pokemon.pokemonId, move: move.move },
+      selectedPokemonMoves.push({
+        pokemonId: pokemon.pokemonId,
+        move: move.move,
       });
     });
+  });
+
+  await client.pokemonMoves.createMany({
+    data: selectedPokemonMoves,
   });
 };
