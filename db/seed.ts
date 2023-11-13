@@ -1,19 +1,16 @@
 import client from "./client";
-import { moves } from "./data/moves";
 import { types } from "./data/types";
 import { formatPokemon } from "../utils/formatPokemon";
 import { rawPokemon } from "./data/rawPokemon";
-// import { pokemonMoves } from "./data/pokemonMoves";
 import { formatMoves } from "../utils/formatMoves";
 import { formatPokemonTypes } from "../utils/formatPokemonTypes";
 import { formatMoveTypes } from "../utils/formatMoveTypes";
 import { trainers } from "./data/trainers";
-import fs from "fs";
 import { rawMoves } from "./data/rawMoves";
-import { getCynthiasTeam, setCynthiasTeam } from "./data/trainerPokemon";
+import { getCynthiasTeam } from "./data/trainerPokemon";
 import { calculateStats } from "../utils/statCalc";
 import { setTeam } from "../utils/setTeam";
-// import { getCynthiasTeam } from "./data/trainerPokemon";
+import { cynthiasPokemonMoves } from "./data/pokemonMoves";
 
 const seed = async () => {
   await client.pokemonMoves.deleteMany();
@@ -44,11 +41,8 @@ const seed = async () => {
   await client.pokemonTypes.createMany({ data: formattedPokemonTypes });
 
   await client.trainers.createMany({ data: trainers });
-  // await setCynthiasTeam();
 
-  setTeam(await getCynthiasTeam(), [
-    { name: "Spiritomb", moves: ["Dark Pulse"] },
-  ]);
+  await setTeam(await getCynthiasTeam(), cynthiasPokemonMoves);
 
   console.log("all seeded a ok");
 };
