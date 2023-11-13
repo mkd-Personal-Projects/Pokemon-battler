@@ -1,5 +1,5 @@
 import client from "../client";
-import { MoveTypes } from "./tsPokemonTypes";
+import { FormattedMoves, formattedPokemon } from "../../db/data/tsPokemonTypes";
 
 export const getCynthiasTeam = async () => [
   ...(await client.pokemon.findMany({ where: { pokemonName: "Spiritomb" } })),
@@ -114,3 +114,50 @@ export const getCustomTeam = async () => [
     where: { pokemonName: "Latios" },
   })),
 ];
+
+export const getTrainersTeam = async (trainersName: string) => {
+  let trainersTeam: formattedPokemon[] = [];
+
+  if (trainersName === "Cynthia") {
+    trainersTeam = await getCynthiasTeam();
+  } else if (trainersName === "Lance") {
+    trainersTeam = await getLancesTeam();
+  } else if (trainersName === "Flint") {
+    trainersTeam = await getFlintsTeam();
+  } else if (trainersName === "Larry") {
+    trainersTeam = await getLarrysTeam();
+  } else if (trainersName === "Malva") {
+    trainersTeam = await getMalvasTeam();
+  } else if (trainersName === "Marshal") {
+    trainersTeam = await getMarshalsTeam();
+  } else if (trainersName === "Volkner") {
+    trainersTeam = await getVolknersTeam();
+  } else if (trainersName === "...") {
+    trainersTeam = await getCustomTeam();
+  }
+
+  const formattedTeam = await Promise.all(
+    trainersTeam.map(async (pokemon) => {
+      const pokemonWithMoves = await client.pokemonMoves.findMany({
+        where: { pokemonId: pokemon.pokemonId },
+        include: { Pokemon: true, Moves: true },
+      });
+
+      const formattedPokemonWithMoves: {
+        pokemon: formattedPokemon;
+        moves: FormattedMoves[];
+      } = {
+        pokemon: pokemonWithMoves[0].Pokemon,
+        moves: [],
+      };
+
+      for (let i = 0; i < pokemonWithMoves.length; i++) {
+        formattedPokemonWithMoves.moves.push(pokemonWithMoves[i].Moves);
+      }
+
+      return formattedPokemonWithMoves;
+    })
+  );
+
+  return formattedTeam;
+};
