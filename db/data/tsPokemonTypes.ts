@@ -62,3 +62,16 @@ export type MoveTypes = {
   Moves?: FormattedMoves;
   Types?: {};
 };
+
+export type PokemonWithTypes = {
+  pokemonId: number;
+  type: string[];
+  pokemonName: string;
+  attack: number;
+  defense: number;
+  health: number;
+  splAttack: number;
+  splDefense: number;
+  speed: number;
+  level: number;
+};

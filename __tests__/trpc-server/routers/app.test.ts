@@ -8,21 +8,56 @@ describe("appRouter", () => {
 
       expect(pokemon.length).toBeGreaterThan(1);
 
-      pokemon.forEach((mon) => {
-        expect(mon).toEqual(
-          expect.objectContaining({
-            pokemonId: expect.any(Number),
-            pokemonName: expect.any(String),
-            attack: expect.any(Number),
-            defense: expect.any(Number),
-            health: expect.any(Number),
-            splAttack: expect.any(Number),
-            splDefense: expect.any(Number),
-            speed: expect.any(Number),
-            level: expect.any(Number),
-          })
-        );
+      pokemon.forEach((pokemon) => {
+        expect(pokemon).toEqual({
+          pokemonId: expect.any(Number),
+          type: expect.any(Array),
+          pokemonName: expect.any(String),
+          attack: expect.any(Number),
+          defense: expect.any(Number),
+          health: expect.any(Number),
+          splAttack: expect.any(Number),
+          splDefense: expect.any(Number),
+          speed: expect.any(Number),
+          level: expect.any(Number),
+        });
       });
+    });
+
+    test("returns a list of pokemon sorted by pokemonId in ascending order by default", async () => {
+      const caller = appRouter.createCaller({});
+      const pokemon = await caller.getAllPokemon();
+      console.log(pokemon);
+
+      expect(pokemon.length).toBeGreaterThan(1);
+      let prevId: number = pokemon[0].pokemonId;
+
+      for (let i = 1; i < pokemon.length; i++) {
+        const currentId: number = pokemon[i].pokemonId;
+
+        expect(currentId - 1).toBe(prevId);
+
+        prevId = currentId;
+      }
+    });
+
+    test("returns a list of pokemon sorted by speed in descending order when given speed and desc as inputs", async () => {
+      const caller = appRouter.createCaller({});
+      const pokemon = await caller.getAllPokemon({
+        sortBy: "speed",
+        orderBy: "desc",
+      });
+
+      expect(pokemon.length).toBeGreaterThan(1);
+      let prevSpeed: number = pokemon[0].speed;
+
+      for (let i = 1; i < pokemon.length; i++) {
+        const currentSpeed: number = pokemon[i].speed;
+
+        expect(currentSpeed <= prevSpeed).toBe(true);
+
+        prevSpeed = currentSpeed;
+      }
     });
   });
   describe("getPokemonById", () => {
@@ -34,6 +69,7 @@ describe("appRouter", () => {
         expect.objectContaining({
           pokemonId: 809,
           pokemonName: "Melmetal",
+          type: expect.any(Array),
           attack: expect.any(Number),
           defense: expect.any(Number),
           health: expect.any(Number),
@@ -114,6 +150,7 @@ describe("appRouter", () => {
         expect(pokemon).toEqual(
           expect.objectContaining({
             pokemonId: expect.any(Number),
+            type: expect.any(Array),
             pokemonName: expect.any(String),
             attack: expect.any(Number),
             defense: expect.any(Number),

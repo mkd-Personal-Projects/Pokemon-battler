@@ -1,11 +1,21 @@
 import { trpc } from "../utils/trpc";
 
 export default function IndexPage() {
-  // const hello = trpc.hello.useQuery({ name: 'scribes' });
+  const pokemon = trpc.getAllPokemon.useQuery({
+    sortBy: "pokemonId",
+    orderBy: "asc",
+  });
 
-  // if (!hello.data) {
-  //   return <div>Loading...</div>;
-  // }
+  const cynthiasTeam = trpc.getTrainersPokemon.useQuery({
+    trainerName: "Cynthia",
+  });
+
+  if (!pokemon.data && !cynthiasTeam.data) {
+    return <div>Loading...</div>;
+  }
+
+  console.log(pokemon.data);
+  console.log(cynthiasTeam.data);
 
   return <div>{/* <p>{hello.data.greeting}</p> */}</div>;
 }

@@ -1,5 +1,10 @@
 import client from "../client";
-import { FormattedMoves, formattedPokemon } from "../../db/data/tsPokemonTypes";
+import {
+  FormattedMoves,
+  PokemonWithTypes,
+  formattedPokemon,
+} from "../../db/data/tsPokemonTypes";
+import { getPokemonById } from "../../models/data/pokemon.model";
 
 export const getCynthiasTeam = async () => [
   ...(await client.pokemon.findMany({ where: { pokemonName: "Spiritomb" } })),
@@ -144,10 +149,10 @@ export const getTrainersTeam = async (trainersName: string) => {
       });
 
       const formattedPokemonWithMoves: {
-        pokemon: formattedPokemon;
+        pokemon: PokemonWithTypes;
         moves: FormattedMoves[];
       } = {
-        pokemon: pokemonWithMoves[0].Pokemon,
+        pokemon: await getPokemonById(pokemonWithMoves[0].Pokemon.pokemonId),
         moves: [],
       };
 

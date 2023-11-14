@@ -9,11 +9,41 @@ import {
 } from "../../models/data/trainers.model";
 
 export const appRouter = router({
-  getAllPokemon: procedure.query(async () => {
-    const pokemon = await getAllPokemon();
+  getAllPokemon: procedure
+    .input(
+      z
+        .object({
+          sortBy: z.enum([
+            "attack",
+            "defense",
+            "speed",
+            "health",
+            "splAttack",
+            "splDefense",
+            "pokemonId",
+            "pokemonName",
+          ]),
+          orderBy: z.enum(["asc", "desc"]),
+        })
+        .optional()
+    )
+    .query(async ({ input }) => {
+      let queryOptions: {
+        [key: string]: "asc" | "desc";
+      } = {};
 
-    return pokemon;
-  }),
+      if (input) {
+        const { orderBy, sortBy } = input;
+
+        queryOptions[sortBy] = orderBy;
+      } else {
+        queryOptions.pokemonId = "asc";
+      }
+
+      const pokemon = await getAllPokemon(queryOptions);
+
+      return pokemon;
+    }),
   getPokemonById: procedure
     .input(
       z.object({
@@ -52,6 +82,3 @@ export const appRouter = router({
       return pokemon;
     }),
 });
-
-// export type definition of API
-// export type AppRouter = typeof appRouter;
