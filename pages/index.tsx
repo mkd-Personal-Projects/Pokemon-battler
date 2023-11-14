@@ -1,21 +1,16 @@
+import { useGetMoves } from "../hooks/trpc/useGetMoves";
+import { useGetPokemon } from "../hooks/trpc/useGetPokemon";
+import { useGetTrainersPokemon } from "../hooks/trpc/useGetTrainersPokemon";
 import { trpc } from "../utils/trpc";
 
 export default function IndexPage() {
-  const pokemon = trpc.getAllPokemon.useQuery({
-    sortBy: "pokemonId",
-    orderBy: "asc",
-  });
+  const { pokemon } = useGetPokemon();
 
-  const cynthiasTeam = trpc.getTrainersPokemon.useQuery({
-    trainerName: "Cynthia",
-  });
-
-  if (!pokemon.data && !cynthiasTeam.data) {
+  if (!pokemon) {
     return <div>Loading...</div>;
   }
 
-  console.log(pokemon.data);
-  console.log(cynthiasTeam.data);
+  console.log(pokemon);
 
   return <div>{/* <p>{hello.data.greeting}</p> */}</div>;
 }
