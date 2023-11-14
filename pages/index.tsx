@@ -1,7 +1,4 @@
-import { useGetMoves } from "../hooks/trpc/useGetMoves";
 import { useGetPokemon } from "../hooks/trpc/useGetPokemon";
-import { useGetTrainersPokemon } from "../hooks/trpc/useGetTrainersPokemon";
-import { trpc } from "../utils/trpc";
 
 export default function IndexPage() {
   const { pokemon } = useGetPokemon();
