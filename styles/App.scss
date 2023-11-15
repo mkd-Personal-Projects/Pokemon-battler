@@ -1,0 +1,59 @@
+// @use "/src/styles/_colors.scss";
+
+* {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: rgb(255, 255, 255);
+  background: #242424;
+}
+
+#home-container {
+  padding: 1rem;
+}
+
+#pokemon-container {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.pokemon-card {
+  padding: 1rem;
+  width: 150px;
+  transition: all 0.4s;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.1);
+}
+
+.pokemon-image {
+  width: 150px;
+}
+
+.pokemon-id {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.pokemon-name {
+  font-size: 20px;
+  padding: 0.4rem 0;
+}
+
+.type-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.type {
+  font-size: 18px;
+}
