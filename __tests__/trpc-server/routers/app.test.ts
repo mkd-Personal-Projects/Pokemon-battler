@@ -27,7 +27,6 @@ describe("appRouter", () => {
     test("returns a list of pokemon sorted by pokemonId in ascending order by default", async () => {
       const caller = appRouter.createCaller({});
       const pokemon = await caller.getAllPokemon();
-      console.log(pokemon);
 
       expect(pokemon.length).toBeGreaterThan(1);
       let prevId: number = pokemon[0].pokemonId;
