@@ -1,4 +1,4 @@
-import { FormattedMoves, PokemonWithTypes } from "../../db/data/tsPokemonTypes";
+import { FormattedMoves, PokemonWithTypes } from "../db/data/tsPokemonTypes";
 import { useState } from "react";
 
 export const useGetTeam = () => {
@@ -10,6 +10,12 @@ export const useGetTeam = () => {
     pokemon: PokemonWithTypes & { moves: FormattedMoves[] }
   ) => {
     setSelectedPokemon((currVal) => {
+      if (currVal.some((mon) => pokemon.pokemonId === mon.pokemonId)) {
+        return currVal.filter((mon) => {
+          return mon.pokemonId !== pokemon.pokemonId;
+        });
+      }
+
       if (currVal.length < 6) {
         return [...currVal, pokemon];
       }
@@ -19,6 +25,6 @@ export const useGetTeam = () => {
 
   return {
     selectedPokemon,
-    addSelectedPokemon: handleAddSelectedPokemon,
+    handleSelectedPokemon: handleAddSelectedPokemon,
   };
 };
