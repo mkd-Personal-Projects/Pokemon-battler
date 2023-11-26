@@ -1,4 +1,4 @@
-import PokemonCard from "../component/pokemonCard";
+import PokemonCard from "../component/PokemonCard";
 import { useGetPokemon } from "../hooks/trpc/useGetPokemon";
 import { useGetTeam } from "../hooks/useGetTeam";
 import Link from "next/link";

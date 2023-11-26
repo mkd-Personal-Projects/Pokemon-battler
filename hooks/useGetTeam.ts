@@ -1,14 +1,14 @@
 import { FormattedMoves, PokemonWithTypes } from "../db/data/tsPokemonTypes";
 import { useState } from "react";
 
-export const useGetTeam = () => {
-  const [selectedPokemon, setSelectedPokemon] = useState<
-    (PokemonWithTypes & { moves: FormattedMoves[] })[]
-  >([]);
+type SelectedPokemonType = PokemonWithTypes & { moves: FormattedMoves[] };
 
-  const handleAddSelectedPokemon = (
-    pokemon: PokemonWithTypes & { moves: FormattedMoves[] }
-  ) => {
+export const useGetTeam = () => {
+  const [selectedPokemon, setSelectedPokemon] = useState<SelectedPokemonType[]>(
+    []
+  );
+
+  const handleAddSelectedPokemon = (pokemon: SelectedPokemonType) => {
     setSelectedPokemon((currVal) => {
       if (currVal.some((mon) => pokemon.pokemonId === mon.pokemonId)) {
         return currVal.filter((mon) => {

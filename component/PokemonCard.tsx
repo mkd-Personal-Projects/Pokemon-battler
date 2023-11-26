@@ -1,14 +1,10 @@
-import { PokemonWithTypes } from "../db/data/tsPokemonTypes";
+import { PokemonCardType } from "./ComponentTypes";
 
 const PokemonCard = ({
   pokemon,
   handleSelectedPokemon,
   isSelected,
-}: {
-  pokemon: PokemonWithTypes;
-  handleSelectedPokemon: () => void;
-  isSelected: boolean;
-}) => {
+}: PokemonCardType) => {
   return (
     <div
       onClick={() => handleSelectedPokemon()}

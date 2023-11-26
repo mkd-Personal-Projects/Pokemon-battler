@@ -1,5 +1,5 @@
 // @use "/src/styles/_colors.scss";
-@use "_dropdown.scss";
+@use "Pokemon.scss";
 
 * {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -10,94 +10,96 @@
 }
 
 body {
-  color: rgb(255, 255, 255);
-  background: #242424;
+  color: rgb(0, 0, 0);
+  background: #d5d5d5;
 }
 
 #home-container {
-  padding: 1rem;
+  position: relative;
+  overflow: hidden;
 }
 
-#pokemon-container {
-  padding: 1rem;
+#player-box {
+  position: fixed;
+  bottom: 0;
+  margin: 5px;
+  padding: 2px;
+  background-color: white;
+  border: 3px solid black;
+  border-bottom: 5px solid black;
+  width: calc(100% - 16px);
+  height: 250px;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+#player-box-inner-trim {
+  background-color: white;
+  border: 3px solid black;
+  border-top: 5px solid black;
+  width: calc(100% - 6px);
+  height: calc(100% - 8px);
+  border-radius: 16px;
+}
+
+#player-box-popup {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 8px;
+  padding: 2px;
+  background-color: white;
+  border: 3px solid black;
+  border-bottom: 5px solid black;
+  width: 45%;
+  height: 250px;
+  border-radius: 20px;
+  z-index: 3;
+}
+
+#player-box-popup-inner-trim {
+  background-color: white;
+  border: 3px solid black;
+  border-top: 5px solid black;
+  width: calc(100% - 6px);
+  height: calc(100% - 8px);
+  border-radius: 16px;
   display: grid;
-  grid-template-columns: repeat(5, 190px);
-  grid-gap: 1rem;
+  grid-template-rows: 50% 50%;
+  align-items: center;
+  justify-items: center;
+}
+
+.four-options {
+  grid-template-columns: 50% 50%;
+}
+
+.popup-options {
+  font-size: 50px;
+}
+
+#player-pokemon {
+  width: 600px;
+  height: 300px;
+  position: fixed;
+  left: -3%;
+  top: 60%;
+  display: flex;
+  align-items: flex-end;
   justify-content: center;
 }
 
-.pokemon-card {
-  padding: 1rem;
-  width: 150px;
-  border: 2px solid rgba(255, 255, 255, 0);
-  border-radius: 0.5rem;
-  background: #242424;
-}
-
-.selected-pokemon-card {
-  border: 2px solid gray;
-}
-
-.pokemon-card:hover {
-  animation: pulse 0.4s;
-}
-
-.pokemon-image {
-  width: 150px;
-}
-
-.pokemon-id {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.pokemon-name {
-  font-size: 20px;
-  padding: 0.4rem 0;
-}
-
-.type-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.type {
-  font-size: 18px;
-}
-
-#confirm-team-container {
-  position: sticky;
-  bottom: 1.5%;
-  right: 2%;
+#opponent-pokemon {
+  width: 500px;
+  height: 200px;
+  position: fixed;
+  right: -5%;
+  top: 15%;
   display: flex;
   align-items: center;
-  justify-content: right;
-  width: 98%;
+  justify-content: center;
 }
 
-#confirm-team-button {
-  padding: 0.5rem 2rem;
-  border-radius: 1rem;
-  font-size: 25px;
-  background-color: rgb(99, 208, 172);
-  border: 1px solid black;
-  color: black;
-  text-decoration: none;
-}
-
-#confirm-team-button:active {
-  animation: pulse 0.4s;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
+#pokemon-image {
+  width: 550px;
 }
