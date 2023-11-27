@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PlayerBox from "../component/PlayerBox";
 import PlayerPopup from "../component/PlayerPopup";
 import BattlePokemon from "../component/BattlePokemon";
+import { useGetPokemonByName } from "../hooks/trpc/useGetPokemonByName";
 
 const IndexPage = () => {
   const [options, setOptions] = useState<string[]>(["FIGHT", "POKEMON"]);
+  const { pokemon, setPokemonName, refetch } = useGetPokemonByName();
 
   const opponentPokemonSprite =
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png";
@@ -13,6 +15,10 @@ const IndexPage = () => {
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/12.png";
 
   const tempPokemonSprite = "/0.png";
+
+  useEffect(() => {
+    console.log(pokemon);
+  }, [pokemon]);
 
   return (
     <div id='home-container'>
@@ -26,7 +32,10 @@ const IndexPage = () => {
         position='player'
       />
 
+      {/* <img className='pokeball' src='pokeball-left.jpeg'></img> */}
+
       <PlayerBox>
+        <input onChange={(e) => setPokemonName(e.target.value)}></input>
         <PlayerPopup options={options} />
       </PlayerBox>
     </div>
@@ -68,6 +77,8 @@ export default IndexPage;
 // Animation for pokemon appearing
 
 // Single fight with cynthia for now
+// Damage calcs with type effectiveness
+// HP decrease with a % based div and at certain %'s can change from green to yellow to red.
 
 //
 //

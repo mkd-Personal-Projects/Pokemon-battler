@@ -6,7 +6,11 @@ const PlayerPopup = ({ options }: PlayerPopupType) => {
     <div id='player-box-popup'>
       <div id='player-box-popup-inner-trim' className={style}>
         {options.map((option) => {
-          return <p className='popup-options'>{option}</p>;
+          return (
+            <p key={option} className='popup-options'>
+              {option}
+            </p>
+          );
         })}
       </div>
     </div>
