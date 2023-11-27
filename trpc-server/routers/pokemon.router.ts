@@ -1,4 +1,9 @@
-import { getAllPokemon, getPokemonById } from "../../models/data/pokemon.model";
+import {
+  getAllPokemon,
+  getPokemonById,
+  getPokemonByName,
+  getPokemonBySearch,
+} from "../../models/data/pokemon.model";
 import { procedure, router } from "../trpc";
 import { z } from "zod";
 
@@ -38,15 +43,17 @@ export const pokemon = router({
 
       return pokemon;
     }),
-  getById: procedure
-    .input(
-      z.object({
-        pokemonId: z.number(),
-      })
-    )
-    .query(async ({ input }) => {
-      const pokemon = await getPokemonById(input.pokemonId);
+  getById: procedure.input(z.number()).query(async ({ input }) => {
+    const pokemonId = input;
+    const pokemon = await getPokemonById(pokemonId);
 
-      return pokemon;
-    }),
+    return pokemon;
+  }),
+  getByName: procedure.input(z.string()).query(async ({ input }) => {
+    const pokemonName = input;
+
+    const pokemon = await getPokemonBySearch(pokemonName);
+
+    return pokemon;
+  }),
 });

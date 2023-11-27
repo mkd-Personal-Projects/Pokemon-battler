@@ -59,3 +59,55 @@ export const getPokemonById = async (pokemonId: number) => {
     level: pokemon[0].Pokemon.level,
   };
 };
+
+export const getPokemonByName = async (pokemonName: string) => {
+  const pokemon = await client.pokemonTypes.findMany({
+    include: { Pokemon: true },
+    where: { Pokemon: { pokemonName: { search: pokemonName } } },
+    take: 2,
+  });
+
+  return {
+    pokemonId: pokemon[0].pokemonId,
+    pokemonName: pokemon[0].Pokemon.pokemonName,
+    type: [
+      ...pokemon.reduce((accumulator: string[], mon) => {
+        if (mon.pokemonId === pokemon[0].pokemonId) {
+          return [...accumulator, mon.type];
+        } else {
+          return accumulator;
+        }
+      }, []),
+    ],
+    attack: pokemon[0].Pokemon.attack,
+    defense: pokemon[0].Pokemon.defense,
+    health: pokemon[0].Pokemon.health,
+    splAttack: pokemon[0].Pokemon.splAttack,
+    splDefense: pokemon[0].Pokemon.splDefense,
+    speed: pokemon[0].Pokemon.speed,
+    level: pokemon[0].Pokemon.level,
+  };
+};
+
+export const getPokemonBySearch = async (pokemonName: string) => {
+  const pokemon = await client.pokemon.groupBy({
+    by: ["pokemonName"],
+    take: 3,
+    orderBy: {
+      pokemonName: "asc",
+    },
+    where: {
+      pokemonName: { startsWith: pokemonName, mode: "insensitive" },
+    },
+  });
+
+  if (pokemon.length === 0) {
+    return [];
+  }
+
+  return await Promise.all(
+    pokemon.map(async (mon) => {
+      return await getPokemonByName(mon.pokemonName);
+    })
+  );
+};
