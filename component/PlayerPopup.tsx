@@ -1,9 +1,12 @@
 import { PlayerPopupType } from "./ComponentTypes";
 
-const PlayerPopup = ({ options }: PlayerPopupType) => {
+const PlayerPopup = ({ options, isMoveSelect }: PlayerPopupType) => {
   const style = options.length === 4 ? "four-options" : "";
   return (
-    <div id='player-box-popup'>
+    <div
+      id='player-box-popup'
+      className={isMoveSelect ? "width-55" : "width-45"}
+    >
       <div id='player-box-popup-inner-trim' className={style}>
         {options.map((option) => {
           return (

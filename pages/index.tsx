@@ -3,10 +3,16 @@ import PlayerBox from "../component/PlayerBox";
 import PlayerPopup from "../component/PlayerPopup";
 import BattlePokemon from "../component/BattlePokemon";
 import { useGetPokemonByName } from "../hooks/trpc/useGetPokemonByName";
+import { useGetTeam } from "../hooks/useGetTeam";
+import SelectPokemon from "../component/SelectPokemon";
+import PokemonPokeballIcon from "../component/PokemonPokeballIcon";
 
 const IndexPage = () => {
-  const [options, setOptions] = useState<string[]>(["FIGHT", "POKEMON"]);
-  const { pokemon, setPokemonName, refetch } = useGetPokemonByName();
+  const [options, setOptions] = useState<string[]>([]);
+  // ["FIGHT", "POKEMON"]
+  const { searchedPokemon, setPokemonName } = useGetPokemonByName();
+  const { selectedPokemon, handleSelectedPokemon } = useGetTeam();
+  const [confirmSelected, setConfirmSelected] = useState<string>("");
 
   const opponentPokemonSprite =
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png";
@@ -16,27 +22,86 @@ const IndexPage = () => {
 
   const tempPokemonSprite = "/0.png";
 
-  useEffect(() => {
-    console.log(pokemon);
-  }, [pokemon]);
-
   return (
     <div id='home-container'>
-      <BattlePokemon
-        src={true ? tempPokemonSprite : opponentPokemonSprite}
-        position='opponent'
-      />
+      {selectedPokemon.length === 6 && (
+        <>
+          <BattlePokemon
+            src={true ? tempPokemonSprite : opponentPokemonSprite}
+            position='opponent'
+          />
+          <BattlePokemon
+            src={true ? tempPokemonSprite : playerPokemonPrite}
+            position='player'
+          />
+        </>
+      )}
 
-      <BattlePokemon
-        src={true ? tempPokemonSprite : playerPokemonPrite}
-        position='player'
-      />
+      {selectedPokemon.length === 0 && (
+        <div id='search-display'>
+          {searchedPokemon?.length ? (
+            searchedPokemon.map((mon) => {
+              const isSelected = confirmSelected === mon.pokemonName;
+              return (
+                <div id='search-pokemon-card' key={mon.pokemonId}>
+                  <SelectPokemon
+                    pokemon={mon}
+                    handleSelectedPokemon={() =>
+                      setConfirmSelected(mon.pokemonName)
+                    }
+                    isSelected={isSelected}
+                  />
+                  {isSelected && (
+                    <button
+                      id='confirm-search-selected'
+                      onClick={() =>
+                        handleSelectedPokemon({ ...mon, moves: [] })
+                      }
+                    >
+                      Confirm
+                    </button>
+                  )}
+                </div>
+              );
+            })
+          ) : (
+            <p>No Pokemon Found!</p>
+          )}
+        </div>
+      )}
+
+      {selectedPokemon.length >= 1 && (
+        <div>
+          {selectedPokemon.map((mon) => {
+            return (
+              <PokemonPokeballIcon
+                key={mon.pokemonId}
+                pokemonId={mon.pokemonId}
+              />
+            );
+          })}
+        </div>
+      )}
 
       {/* <img className='pokeball' src='pokeball-left.jpeg'></img> */}
 
       <PlayerBox>
-        <input onChange={(e) => setPokemonName(e.target.value)}></input>
-        <PlayerPopup options={options} />
+        <div id='player-box-container'>
+          {selectedPokemon.length === 0 && (
+            <div>
+              <p>What is your favourite Pokemon?</p>
+              <div id='search-container'>
+                <input
+                  placeholder='Charizard'
+                  id='search-input'
+                  onChange={(e) => setPokemonName(e.target.value)}
+                />
+                <button id='search-button'>Random</button>
+              </div>
+            </div>
+          )}
+        </div>
+        <PlayerPopup isMoveSelect={false} options={options} />
       </PlayerBox>
     </div>
   );

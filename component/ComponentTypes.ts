@@ -6,7 +6,7 @@ export type BattlePokemonTypes = {
   position: string;
 };
 
-export type PlayerPopupType = { options: string[] };
+export type PlayerPopupType = { options: string[]; isMoveSelect: boolean };
 
 export type ChildrenType = { children: ReactNode };
 

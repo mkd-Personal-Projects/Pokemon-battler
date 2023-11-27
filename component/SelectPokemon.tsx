@@ -1,6 +1,7 @@
 import { PokemonCardType } from "./ComponentTypes";
+import PokemonPokeballIcon from "./PokemonPokeballIcon";
 
-const PokemonCard = ({
+const SelectPokemon = ({
   pokemon,
   handleSelectedPokemon,
   isSelected,
@@ -8,7 +9,10 @@ const PokemonCard = ({
   return (
     <div
       onClick={() => handleSelectedPokemon()}
-      className={"pokemon-card " + (isSelected ? " selected-pokemon-card" : "")}
+      className={
+        "search-pokemon-container " +
+        (isSelected ? " selected-search-pokemon" : "")
+      }
     >
       <img
         // src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemonId}.png`}
@@ -31,4 +35,4 @@ const PokemonCard = ({
   );
 };
 
-export default PokemonCard;
+export default SelectPokemon;
