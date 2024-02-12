@@ -17,6 +17,8 @@ import {
 import PokeballCard from "../component/PokeballCard";
 import { useGetTrainersPokemon } from "../hooks/trpc/useGetTrainersPokemon";
 import { useGetRandomPokemon } from "../hooks/trpc/useGetRandomPokemon";
+import PlayerBoxText from "../component/PlayerBoxText";
+import { delayTimer } from "../utils/delayTimer";
 
 const shouldDisplayTemp = true;
 
@@ -151,14 +153,6 @@ const IndexPage = () => {
           return mon;
         }
       });
-  };
-
-  const delayTimer = (delay: number = 1000) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve("done");
-      }, delay);
-    });
   };
 
   const updatePokemonFaitedStatus = (
@@ -574,29 +568,14 @@ const IndexPage = () => {
 
       <PlayerBox>
         <div id='player-box-container'>
-          <div>
-            <p style={{ whiteSpace: "pre-line" }}>{mainText}</p>
-            {mainText.includes("Power / ") ? (
-              <button onClick={handlePlayerAttackDamage} id='attack-button'>
-                Attack
-              </button>
-            ) : (
-              <></>
-            )}
-            {pokemonTeam.length === 0 && (
-              <div>
-                <input
-                  placeholder='Charizard'
-                  id='search-input'
-                  value={pokemonName}
-                  onChange={(e) => setPokemonName(e.target.value)}
-                />
-                <button id='search-button' onClick={handleRandomPokemonSearch}>
-                  Random
-                </button>
-              </div>
-            )}
-          </div>
+          <PlayerBoxText
+            mainText={mainText}
+            handlePlayerAttackDamage={handlePlayerAttackDamage}
+            pokemonTeamLength={pokemonTeam.length}
+            pokemonName={pokemonName}
+            setPokemonName={setPokemonName}
+            handleRandomPokemonSearch={handleRandomPokemonSearch}
+          />
         </div>
         <PlayerPopup
           isMoveSelect={false}
