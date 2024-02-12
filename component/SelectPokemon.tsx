@@ -5,6 +5,7 @@ const SelectPokemon = ({
   pokemon,
   handleSelectedPokemon,
   isSelected,
+  shouldDisplayTemp,
 }: PokemonCardType) => {
   return (
     <div
@@ -15,8 +16,11 @@ const SelectPokemon = ({
       }
     >
       <img
-        // src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemonId}.png`}
-        src={`/0.png`}
+        src={
+          shouldDisplayTemp
+            ? `/0.png`
+            : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemonId}.png`
+        }
         alt={pokemon.pokemonName}
         className='pokemon-image'
       />

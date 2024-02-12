@@ -1,0 +1,120 @@
+.pokeball-card-container {
+  position: relative;
+}
+
+.pokeball-popop-container {
+  background-color: white;
+  border: 3px solid black;
+  border-bottom: 3px solid black;
+  width: 400px;
+  height: 115px;
+  position: absolute;
+  margin: 3px;
+  top: 2%;
+  left: 60%;
+  border-radius: 20px;
+  z-index: 1;
+}
+
+.pokeball-popop-container-inner-trim {
+  background-color: white;
+  border: 2px solid black;
+  border-top: 3px solid black;
+  width: calc(100% - 28px);
+  height: calc(100% - 19px);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  margin: 2px;
+}
+
+.pokeball-pokemon-info {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px solid black;
+  margin-left: 16px;
+  width: 100%;
+}
+
+.pokeball-pokemon-info p {
+  font-size: 18px;
+}
+
+.pokeball-moves-info {
+  text-align: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 0.5rem;
+}
+
+.pokeball-moves-info p {
+  font-size: 16px;
+}
+
+.pokeball-status {
+  width: 75%;
+  height: 75%;
+  z-index: 1;
+  position: absolute;
+  border-radius: 50%;
+  left: 13%;
+  top: 13%;
+  opacity: 0.4;
+}
+
+.-fainted {
+  background-color: red;
+}
+
+.-active {
+  background-color: rgb(20, 216, 180);
+}
+
+.pokeball-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100px;
+  position: relative;
+  background-color: transparent;
+  border: transparent;
+  border-radius: 50%;
+  margin: 3px 5px;
+  z-index: 2;
+}
+
+.icon-over-pokeball {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  z-index: 4;
+}
+
+.pokeball {
+  opacity: 0.5;
+  width: 100%;
+  z-index: 3;
+}
+
+.switch-in-button {
+  position: absolute;
+  right: 10px;
+  bottom: -35px;
+  height: 30px;
+  width: 80px;
+  border-radius: 8px;
+  background: white;
+  border: 2px solid black;
+}
+
+.switch-in-button:active {
+  transform: scale(0.95);
+}

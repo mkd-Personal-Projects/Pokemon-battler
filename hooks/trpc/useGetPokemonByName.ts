@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { trpc } from "../../utils/trpc";
+import { PokemonWithMovesTypes } from "../../db/data/tsPokemonTypes";
 
-export const useGetPokemonByName = () => {
-  const [pokemonName, setPokemonName] = useState<string>("");
-  const { data, refetch } = trpc.pokemon.getByName.useQuery(pokemonName);
+export const useGetPokemonByName = (searchTerm: string) => {
+  const [pokemon, setPokemon] = useState<PokemonWithMovesTypes[]>([]);
+  const { data, isLoading } = trpc.pokemon.getByName.useQuery(searchTerm);
 
-  const updateSearch = (str: string) => {
-    setPokemonName(str);
-  };
+  useEffect(() => {
+    if (data && !isLoading) {
+      setPokemon(data.map((mon) => ({ ...mon, status: "" })));
+    }
+  }, [data]);
 
   return {
-    searchedPokemon: data,
-    setPokemonName: updateSearch,
+    searchedPokemon: pokemon,
+    isLoading,
   };
 };

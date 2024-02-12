@@ -1,10 +1,11 @@
+import { getTRPCErrorFromUnknown } from "@trpc/server";
 import { appRouter } from "../../../trpc-server/routers/_app";
 
 describe("appRouter", () => {
-  describe("getAllPokemon", () => {
+  describe("pokemon.list", () => {
     test("returns a list of pokemon", async () => {
       const caller = appRouter.createCaller({});
-      const pokemon = await caller.getAllPokemon();
+      const pokemon = await caller.pokemon.list();
 
       expect(pokemon.length).toBeGreaterThan(1);
 
@@ -26,7 +27,7 @@ describe("appRouter", () => {
 
     test("returns a list of pokemon sorted by pokemonId in ascending order by default", async () => {
       const caller = appRouter.createCaller({});
-      const pokemon = await caller.getAllPokemon();
+      const pokemon = await caller.pokemon.list();
 
       expect(pokemon.length).toBeGreaterThan(1);
       let prevId: number = pokemon[0].pokemonId;
@@ -42,7 +43,7 @@ describe("appRouter", () => {
 
     test("returns a list of pokemon sorted by speed in descending order when given speed and desc as inputs", async () => {
       const caller = appRouter.createCaller({});
-      const pokemon = await caller.getAllPokemon({
+      const pokemon = await caller.pokemon.list({
         sortBy: "speed",
         orderBy: "desc",
       });
@@ -62,7 +63,7 @@ describe("appRouter", () => {
   describe("getPokemonById", () => {
     test("returns the specified pokemon by its id", async () => {
       const caller = appRouter.createCaller({});
-      const pokemon = await caller.getPokemonById({ pokemonId: 809 });
+      const pokemon = await caller.pokemon.getById(809);
 
       expect(pokemon).toEqual(
         expect.objectContaining({
@@ -83,7 +84,7 @@ describe("appRouter", () => {
   describe("getAllMoves", () => {
     test("returns a list of moves", async () => {
       const caller = appRouter.createCaller({});
-      const moves = await caller.getAllMoves();
+      const moves = await caller.move.list();
 
       expect(moves.length).toBeGreaterThan(1);
 
@@ -103,7 +104,7 @@ describe("appRouter", () => {
   describe("getAllTypes", () => {
     test("returns a list of types", async () => {
       const caller = appRouter.createCaller({});
-      const types = await caller.getAllTypes();
+      const types = await caller.type.list();
 
       expect(types.length).toBeGreaterThan(1);
 
@@ -122,7 +123,7 @@ describe("appRouter", () => {
   describe("getAllTrainers", () => {
     test("returns a list of trainers", async () => {
       const caller = appRouter.createCaller({});
-      const trainers = await caller.getAllTrainers();
+      const trainers = await caller.trainer.list();
 
       expect(trainers.length).toBeGreaterThan(1);
 
@@ -139,7 +140,7 @@ describe("appRouter", () => {
   describe("getTrainersPokemon", () => {
     test("returns the all the pokemon and their moves for the given trainer", async () => {
       const caller = appRouter.createCaller({});
-      const team = await caller.getTrainersPokemon({
+      const team = await caller.trainer.getPokemon({
         trainerName: "Cynthia",
       });
 

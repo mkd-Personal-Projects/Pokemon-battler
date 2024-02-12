@@ -10,5 +10,11 @@ export const getAllTrainers = async () => {
 export const getTrainersPokemon = async (name: string) => {
   const trainersTeam = await getTrainersTeam(name);
 
-  return trainersTeam;
+  return trainersTeam.map((mon, index) => {
+    return {
+      ...mon,
+      status: index === 0 ? "active" : "",
+      currentHealth: mon.health,
+    };
+  });
 };

@@ -55,23 +55,35 @@ export type FormattedMoves = {
   pp: number;
 };
 
+export type TypeInfo = {
+  strongAgainst: string[];
+  weakAgainst: string[];
+  doesNotEffect: string[];
+};
+
 export type MoveTypes = {
   moveTypeId: string;
   move: string;
   type: string;
   Moves?: FormattedMoves;
-  Types?: {};
+  Types?: TypeInfo;
+};
+
+export type MoveTypesFormatted = {
+  moveName: string;
+  category: string;
+  power: number;
+  accuracy: number;
+  pp: number;
+  type: string;
 };
 
 export type PokemonWithTypes = {
-  pokemonId: number;
   type: string[];
-  pokemonName: string;
-  attack: number;
-  defense: number;
-  health: number;
-  splAttack: number;
-  splDefense: number;
-  speed: number;
-  level: number;
-};
+} & formattedPokemon;
+
+export type PokemonWithMovesTypes = {
+  moves: MoveTypesFormatted[];
+  status: string;
+  currentHealth?: number;
+} & PokemonWithTypes;

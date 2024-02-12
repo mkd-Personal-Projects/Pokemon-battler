@@ -42,7 +42,7 @@ export const getPokemonById = async (pokemonId: number) => {
     where: { pokemonId: pokemonId },
   });
 
-  return {
+  const formattedPokemon: PokemonWithTypes = {
     pokemonId: pokemon[0].pokemonId,
     pokemonName: pokemon[0].Pokemon.pokemonName,
     type: [
@@ -58,6 +58,8 @@ export const getPokemonById = async (pokemonId: number) => {
     speed: pokemon[0].Pokemon.speed,
     level: pokemon[0].Pokemon.level,
   };
+
+  return formattedPokemon;
 };
 
 export const getPokemonByName = async (pokemonName: string) => {
@@ -67,7 +69,7 @@ export const getPokemonByName = async (pokemonName: string) => {
     take: 2,
   });
 
-  return {
+  const formattedPokemon: PokemonWithTypes = {
     pokemonId: pokemon[0].pokemonId,
     pokemonName: pokemon[0].Pokemon.pokemonName,
     type: [
@@ -87,9 +89,11 @@ export const getPokemonByName = async (pokemonName: string) => {
     speed: pokemon[0].Pokemon.speed,
     level: pokemon[0].Pokemon.level,
   };
+
+  return formattedPokemon;
 };
 
-export const getPokemonBySearch = async (pokemonName: string) => {
+export const getPokemonsBySearchedName = async (pokemonName: string) => {
   const pokemon = await client.pokemon.groupBy({
     by: ["pokemonName"],
     take: 3,
@@ -110,4 +114,27 @@ export const getPokemonBySearch = async (pokemonName: string) => {
       return await getPokemonByName(mon.pokemonName);
     })
   );
+};
+
+export const getPokemonByType = async (pokemonType: string) => {
+  const pokemon = await client.pokemonTypes.findMany({
+    include: { Pokemon: true },
+    where: { Types: { type: { search: pokemonType } } },
+  });
+
+  const ChosenPokemon =
+    pokemon[Math.floor(Math.random() * (pokemon.length - 1))];
+
+  return await getPokemonByName(ChosenPokemon.Pokemon.pokemonName);
+};
+
+export const getRandomPokemon = async () => {
+  const pokemon = await client.pokemonTypes.findMany({
+    include: { Pokemon: true },
+  });
+
+  const ChosenPokemon =
+    pokemon[Math.floor(Math.random() * (pokemon.length - 1))];
+
+  return await getPokemonByName(ChosenPokemon.Pokemon.pokemonName);
 };

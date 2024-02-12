@@ -1,9 +1,13 @@
+import { MoveTypes, MoveTypesFormatted } from "../../db/data/tsPokemonTypes";
+import { getMovesByType } from "../../models/data/moves.model";
 import {
   getAllPokemon,
   getPokemonById,
-  getPokemonByName,
-  getPokemonBySearch,
+  getPokemonByType,
+  getPokemonsBySearchedName,
+  getRandomPokemon,
 } from "../../models/data/pokemon.model";
+import { getFourRandomElems } from "../../utils/getFourRandomElems";
 import { procedure, router } from "../trpc";
 import { z } from "zod";
 
@@ -52,8 +56,67 @@ export const pokemon = router({
   getByName: procedure.input(z.string()).query(async ({ input }) => {
     const pokemonName = input;
 
-    const pokemon = await getPokemonBySearch(pokemonName);
+    const pokemon = await getPokemonsBySearchedName(pokemonName);
 
-    return pokemon;
+    const pokemonWithMoves = await Promise.all(
+      pokemon.map(async (mon) => {
+        const moves = getFourRandomElems(
+          [
+            ...(await Promise.all(
+              mon.type.map(async (type) => {
+                return await Promise.all([...(await getMovesByType(type))]);
+              })
+            )),
+          ].flat()
+        ) as MoveTypes[];
+
+        const formattedMoves = moves.map((move) => {
+          return { ...move.Moves, type: move.type };
+        }) as MoveTypesFormatted[];
+
+        return {
+          ...mon,
+          moves: formattedMoves,
+          currentHealth: mon.health,
+        };
+      })
+    );
+
+    return pokemonWithMoves;
+  }),
+  getByType: procedure.input(z.string()).query(async ({ input }) => {
+    const type = input;
+
+    const pokemon = await getPokemonByType(type);
+    const moves = await getMovesByType(type);
+
+    const formattedMoves = moves.map((move) => {
+      return { ...move.Moves, type: move.type };
+    });
+
+    return { ...pokemon, moves: formattedMoves, currentHealth: pokemon.health };
+  }),
+  getRandomPokemon: procedure.input(z.string()).query(async () => {
+    const pokemon = await getRandomPokemon();
+
+    const moves = getFourRandomElems(
+      [
+        ...(await Promise.all(
+          pokemon.type.map(async (type) => {
+            return await Promise.all([...(await getMovesByType(type))]);
+          })
+        )),
+      ].flat()
+    ) as MoveTypes[];
+
+    const formattedMoves = moves.map((move) => {
+      return { ...move.Moves, type: move.type };
+    }) as MoveTypesFormatted[];
+
+    return {
+      ...pokemon,
+      moves: formattedMoves,
+      currentHealth: pokemon.health,
+    };
   }),
 });

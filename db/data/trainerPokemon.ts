@@ -1,127 +1,84 @@
-import client from "../client";
 import {
-  FormattedMoves,
+  MoveTypes,
+  MoveTypesFormatted,
   PokemonWithTypes,
-  formattedPokemon,
 } from "../../db/data/tsPokemonTypes";
-import { getPokemonById } from "../../models/data/pokemon.model";
+import { getPokemonsBySearchedName } from "../../models/data/pokemon.model";
+import { getMovesByType } from "../../models/data/moves.model";
+import { getFourRandomElems } from "../../utils/getFourRandomElems";
 
 export const getCynthiasTeam = async () => [
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Spiritomb" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Roserade" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Togekiss" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Lucario" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Milotic" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Garchomp" } })),
+  ...(await getPokemonsBySearchedName("Spiritomb")),
+  ...(await getPokemonsBySearchedName("Roserade")),
+  ...(await getPokemonsBySearchedName("Togekiss")),
+  ...(await getPokemonsBySearchedName("Lucario")),
+  ...(await getPokemonsBySearchedName("Milotic")),
+  ...(await getPokemonsBySearchedName("Garchomp")),
 ];
 
 export const getLancesTeam = async () => [
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Dragonite" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Kingdra" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Hydreigon" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Salamence" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Haxorus" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Flygon" } })),
+  ...(await getPokemonsBySearchedName("Dragonite")),
+  ...(await getPokemonsBySearchedName("Kingdra")),
+  ...(await getPokemonsBySearchedName("Hydreigon")),
+  ...(await getPokemonsBySearchedName("Salamence")),
+  ...(await getPokemonsBySearchedName("Haxorus")),
+  ...(await getPokemonsBySearchedName("Flygon")),
 ];
 
 export const getFlintsTeam = async () => [
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Rapidash" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Lopunny" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Steelix" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Drifblim" } })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Infernape" } })),
+  ...(await getPokemonsBySearchedName("Rapidash")),
+  ...(await getPokemonsBySearchedName("Lopunny")),
+  ...(await getPokemonsBySearchedName("Steelix")),
+  ...(await getPokemonsBySearchedName("Drifblim")),
+  ...(await getPokemonsBySearchedName("Infernape")),
 ];
 
 export const getLarrysTeam = async () => [
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Aerodactyl" },
-  })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Altaria" } })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Hawlucha" },
-  })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Oricorio" } })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Talonflame" },
-  })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Gengar" } })),
+  ...(await getPokemonsBySearchedName("Aerodactyl")),
+  ...(await getPokemonsBySearchedName("Altaria")),
+  ...(await getPokemonsBySearchedName("Hawlucha")),
+  ...(await getPokemonsBySearchedName("Oricorio")),
+  ...(await getPokemonsBySearchedName("Talonflame")),
+  ...(await getPokemonsBySearchedName("Gengar")),
 ];
 
 export const getMalvasTeam = async () => [
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Pyroar" },
-  })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Houndoom" } })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Torkoal" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Incineroar" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Infernape" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Darmanitan" },
-  })),
+  ...(await getPokemonsBySearchedName("Pyroar")),
+  ...(await getPokemonsBySearchedName("Houndoom")),
+  ...(await getPokemonsBySearchedName("Torkoal")),
+  ...(await getPokemonsBySearchedName("Incineroar")),
+  ...(await getPokemonsBySearchedName("Infernape")),
+  ...(await getPokemonsBySearchedName("Darmanitan")),
 ];
 
 export const getMarshalsTeam = async () => [
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Conkeldurr" },
-  })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Gallade" } })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Hariyama" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Hitmonlee" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Vikavolt" },
-  })),
+  ...(await getPokemonsBySearchedName("Conkeldurr")),
+  ...(await getPokemonsBySearchedName("Gallade")),
+  ...(await getPokemonsBySearchedName("Hariyama")),
+  ...(await getPokemonsBySearchedName("Hitmonlee")),
+  ...(await getPokemonsBySearchedName("Vikavolt")),
 ];
 
 export const getVolknersTeam = async () => [
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Electivire" },
-  })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Luxray" } })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Raichu" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Rotom" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Jolteon" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Electrode" },
-  })),
+  ...(await getPokemonsBySearchedName("Electivire")),
+  ...(await getPokemonsBySearchedName("Luxray")),
+  ...(await getPokemonsBySearchedName("Raichu")),
+  ...(await getPokemonsBySearchedName("Rotom")),
+  ...(await getPokemonsBySearchedName("Jolteon")),
+  ...(await getPokemonsBySearchedName("Electrode")),
 ];
 
 export const getCustomTeam = async () => [
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Tyranitar" },
-  })),
-  ...(await client.pokemon.findMany({ where: { pokemonName: "Infernape" } })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Celesteela" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Zeraora" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Azumarill" },
-  })),
-  ...(await client.pokemon.findMany({
-    where: { pokemonName: "Latios" },
-  })),
+  ...(await getPokemonsBySearchedName("Tyranitar")),
+  ...(await getPokemonsBySearchedName("Infernape")),
+  ...(await getPokemonsBySearchedName("Celesteela")),
+  ...(await getPokemonsBySearchedName("Zeraora")),
+  ...(await getPokemonsBySearchedName("Azumarill")),
+  ...(await getPokemonsBySearchedName("Latios")),
 ];
 
 export const getTrainersTeam = async (trainersName: string) => {
-  let trainersTeam: formattedPokemon[] = [];
+  let trainersTeam: PokemonWithTypes[] = [];
 
   if (trainersName === "Cynthia") {
     trainersTeam = await getCynthiasTeam();
@@ -142,25 +99,25 @@ export const getTrainersTeam = async (trainersName: string) => {
   }
 
   const formattedTeam = await Promise.all(
-    trainersTeam.map(async (pokemon) => {
-      const pokemonWithMoves = await client.pokemonMoves.findMany({
-        where: { pokemonId: pokemon.pokemonId },
-        include: { Pokemon: true, Moves: true },
-      });
+    trainersTeam.map(async (mon) => {
+      const moves = getFourRandomElems(
+        [
+          ...(await Promise.all(
+            mon.type.map(async (type) => {
+              return await Promise.all([...(await getMovesByType(type))]);
+            })
+          )),
+        ].flat()
+      ) as MoveTypes[];
 
-      const formattedPokemonWithMoves: {
-        pokemon: PokemonWithTypes;
-        moves: FormattedMoves[];
-      } = {
-        pokemon: await getPokemonById(pokemonWithMoves[0].Pokemon.pokemonId),
-        moves: [],
+      const formattedMoves = moves.map((move) => {
+        return { ...move.Moves, type: move.type };
+      }) as MoveTypesFormatted[];
+
+      return {
+        ...mon,
+        moves: formattedMoves,
       };
-
-      for (let i = 0; i < pokemonWithMoves.length; i++) {
-        formattedPokemonWithMoves.moves.push(pokemonWithMoves[i].Moves);
-      }
-
-      return formattedPokemonWithMoves;
     })
   );
 
