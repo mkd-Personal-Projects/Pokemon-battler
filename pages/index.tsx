@@ -592,7 +592,6 @@ const IndexPage = () => {
 export default IndexPage;
 
 // --- SETUP ---
-
 // Loading page with a spinner and messages of e.g. "Capturing pokemon" -- can be hard coded to stall for 5 - 10 seconds
 
 // Allow user to choose their fav pokemon
