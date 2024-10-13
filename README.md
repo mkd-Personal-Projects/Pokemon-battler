@@ -2,7 +2,7 @@
 
 ## **Description**
 
-An application built using next.js and the T3 stack. This is a pokemon themed game that can be viewed/played: [Hosted link WIP](). To run this project locally: 
+This is a pokemon themed game built using next.js and the T3 stack, and can be viewed/played here: [Hosted link WIP](). To run this project locally: 
 
 # **Setup Instructions**
 
