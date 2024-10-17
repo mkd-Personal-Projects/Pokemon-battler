@@ -50,7 +50,7 @@ NODE_ENV=development
 
 ```
 npm run setup-db
-npm run seed
 npx prisma migrate dev
+npm run seed
 npm run dev
 ```
