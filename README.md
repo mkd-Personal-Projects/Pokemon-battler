@@ -49,7 +49,7 @@ NODE_ENV=development
  - You will then need to run the following scripts to run this project locally:
 
 ```
-npm run setup-dbs
+npm run setup-db
 npm run seed
 npx prisma migrate dev
 npm run dev
